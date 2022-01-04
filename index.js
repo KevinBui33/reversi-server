@@ -13,22 +13,22 @@ app.get("/", (req, res) => {
 
 app.get("/init", (req, res) => {
   console.log("Getting init board");
-  let startTurn = "dark";
+  let turn = "dark";
 
   // Get the starting board (no moves that can be found)
   let board = game.initBoard();
 
   console.log("Getting the players pieces on the board");
   // Get the pieces on the board by player
-  let darkPieces = game.getPlayerPiecesOnBoard(board, startTurn);
+  let darkPieces = game.getPlayerPiecesOnBoard(board, turn);
   let lightPieces = game.getPlayerPiecesOnBoard(board, "light");
-
   // Find the moves a player can make
   console.log("finding the available moves");
+  game.availableMovesForPlayer(board, darkPieces);
 
   // Set the scores and player who starts
   res.set("content-type", "application/json");
-  res.send({ board, darkPieces, lightPieces, startTurn });
+  res.send({ board, darkPieces, lightPieces, turn });
 });
 
 app.listen(port, () => {
